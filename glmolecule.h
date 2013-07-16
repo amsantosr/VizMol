@@ -24,6 +24,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include "molecule.h"
+#include "GL/glu.h"
 
 /**
 * Represents an GLWidget for molecules
