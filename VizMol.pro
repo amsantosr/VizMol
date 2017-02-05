@@ -17,4 +17,4 @@ HEADERS += atom.h \
     molecule.h \
     util.h
 FORMS += mainwindow.ui
-LIBS += -lglut -lGLU
+LIBS += -lGLU
