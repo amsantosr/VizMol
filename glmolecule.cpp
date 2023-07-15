@@ -368,7 +368,6 @@ void GLMolecule::mouseReleaseEvent(QMouseEvent *event)
 
 void GLMolecule::wheelEvent(QWheelEvent *event)
 {
-    qDebug() << event->angleDelta();
     distance -= event->angleDelta().y() / 20.0;
     update();
 }
