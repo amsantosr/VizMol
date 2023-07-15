@@ -41,12 +41,10 @@ void Molecule::load(const QString &filename)
     while (line = input.readLine(), !line.isNull()) {
         if (line.startsWith("ATOM") || line.startsWith("HETATM")) {
             Atom atom;
-            QString codeStr = QStringRef(&line, 12, 4).toString();
-
             atom.setX(Util::parseFloat(line, 30, 8));
             atom.setY(Util::parseFloat(line, 38, 8));
             atom.setZ(Util::parseFloat(line, 46, 8));
-            atom.setCode(codeStr.trimmed());
+            atom.setCode(line.mid(12, 4).trimmed());
 
             m_Atoms.push_back(atom);
         }
@@ -81,6 +79,6 @@ void Molecule::addLink(int id1, int id2)
 
     int numAtomos = this->numAtoms();
     if (0 <= id1 && id1 < numAtomos && 0 <= id2 && id2 < numAtomos)
-        if (qFind(first, last, newEnlace) == last)
+        if (std::find(first, last, newEnlace) == last)
             m_Links.push_back(Link(id1, id2));
 }

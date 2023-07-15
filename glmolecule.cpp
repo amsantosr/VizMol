@@ -45,7 +45,7 @@ const float GLMolecule::cpkTable[16][4] = {
 };
 
 GLMolecule::GLMolecule(QWidget *parent)
-    : QGLWidget(parent)
+    : QOpenGLWidget(parent)
 {
     distance = -40.0f;
     molecule = 0;
@@ -123,19 +123,19 @@ void GLMolecule::setMolecule(const Molecule *molecule) {
         }
     }
 
-    updateGL();
+    update();
 }
 
 void GLMolecule::showBox(bool enabled)
 {
     flagBox = enabled;
-    updateGL();
+    update();
 }
 
 void GLMolecule::showAxis(bool enabled)
 {
     flagAxis = enabled;
-    updateGL();
+    update();
 }
 
 void GLMolecule::initializeGL()
@@ -149,14 +149,13 @@ void GLMolecule::initializeGL()
 
     glEnable(GL_NORMALIZE);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, distance);
 }
 
 void GLMolecule::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, distance);
 
     if (molecule == 0) return;
 
@@ -351,12 +350,12 @@ void GLMolecule::mousePressEvent(QMouseEvent *event)
 void GLMolecule::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton) {
-        int dx = event->x() - lastPos.x();
-        int dy = event->y() - lastPos.y();
+        int dx = event->position().x() - lastPos.x();
+        int dy = event->position().y() - lastPos.y();
         (xRot += dy + 360) %= 360;
         (yRot += dx + 360) %= 360;
         lastPos = event->pos();
-        updateGL();
+        update();
     }
 }
 
@@ -369,17 +368,16 @@ void GLMolecule::mouseReleaseEvent(QMouseEvent *event)
 
 void GLMolecule::wheelEvent(QWheelEvent *event)
 {
-    distance -= event->delta() / 50.0f;
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, distance);
-    updateGL();
+    qDebug() << event->angleDelta();
+    distance -= event->angleDelta().y() / 20.0;
+    update();
 }
 
 void GLMolecule::setStyle(Style style)
 {
     if (flagStyle != style) {
         flagStyle = style;
-        updateGL();
+        update();
     }
 }
 

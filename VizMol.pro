@@ -1,7 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator
 # -------------------------------------------------
-QT += opengl
+QT += openglwidgets
 TARGET = VizMol
 TEMPLATE = app
 SOURCES += atom.cpp \
@@ -17,4 +17,4 @@ HEADERS += atom.h \
     molecule.h \
     util.h
 FORMS += mainwindow.ui
-LIBS += -lGLU
+LIBS += -lopengl32 -lglu32

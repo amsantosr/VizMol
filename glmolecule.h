@@ -20,7 +20,7 @@
 #ifndef GLMOLECULA_H
 #define GLMOLECULA_H
 
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QMainWindow>
 #include <QVector>
 #include "molecule.h"
@@ -31,7 +31,7 @@
 *
 * @author Abraham Max Santos Ramos
 */
-class GLMolecule : public QGLWidget
+class GLMolecule : public QOpenGLWidget
 {
     Q_OBJECT
 

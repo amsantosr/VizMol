@@ -30,8 +30,7 @@ float Util::parseFloat(const QString &str, int pos, int len)
     bool ok;
 
     if (pos + len <= str.length()) {
-        QStringRef ref(&str, pos, len);
-        value = ref.toString().toFloat(&ok);
+        value = str.sliced(pos, len).toFloat(&ok);
     }
 
     return value;
@@ -44,8 +43,7 @@ int Util::parseInt(const QString &str, int pos, int len)
 
     if (pos <= str.length()) {
         len = qMin(len, str.length() - pos);
-        QStringRef ref(&str, pos, len);
-        value = ref.toString().toInt(&ok);
+        value = str.sliced(pos, len).toInt(&ok);
         if (!ok)
             value = -1;
     }
